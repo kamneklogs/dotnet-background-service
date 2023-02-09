@@ -19,8 +19,6 @@ public class TimeProvider : ITimeProvider
 
     private Dictionary<string, TimeZoneInfo> _timeZones = new Dictionary<string, TimeZoneInfo>();
 
-    private readonly string uuid = Guid.NewGuid().ToString();
-
     public TimeProvider()
     {
         foreach (string timeZone in cityXtimeZones)
@@ -35,13 +33,11 @@ public class TimeProvider : ITimeProvider
 
     public void PrintTime()
     {
-        System.Console.WriteLine($"UUID: {uuid}");
-/* 
         foreach (KeyValuePair<string, TimeZoneInfo> timeZone in _timeZones)
         {
             Console.WriteLine($"City: {timeZone.Key}");
             System.Console.WriteLine($"Timezone: {TZConvert.WindowsToIana(timeZone.Value.Id)}");
             System.Console.WriteLine($"Time: {DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.FFFzzz", CultureInfo.InvariantCulture)}\n");
-        } */
+        }
     }
 }
