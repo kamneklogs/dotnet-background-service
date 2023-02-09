@@ -3,7 +3,7 @@ using e08.application.impl;
 using e08.infrastructure;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices((_, services) =>
+    .ConfigureServices(services =>
     {
         services.AddHostedService<TimeService>();
 
