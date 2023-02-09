@@ -39,7 +39,7 @@ public class CountryTimeService : BackgroundService
                 System.Console.WriteLine($"Time: {DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.FFFzzz", CultureInfo.InvariantCulture)}\n");
             }
 
-            await Task.Delay(1000 * 5, stoppingToken);
+            await Task.Delay(1000 * 30, stoppingToken);
         }
     }
 }
