@@ -16,7 +16,6 @@ IHost host = Host.CreateDefaultBuilder(args)
 
         services.AddSingleton<DbContext, CountryTimeDBContext>();
         services.AddSingleton<IUnitOfWork, UnitOfWork>();
-        //services.AddSingleton(typeof(IRepository<>), typeof(Repository<>));
     })
     .Build();
 
