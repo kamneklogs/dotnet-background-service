@@ -21,4 +21,11 @@ public class TimeService : BackgroundService
             await Task.Delay(1000 * 30, stoppingToken);
         }
     }
+
+    public override async Task StopAsync(CancellationToken stoppingToken)
+    {
+        System.Console.WriteLine("Background service completed");
+
+        await base.StopAsync(stoppingToken);
+    }
 }
