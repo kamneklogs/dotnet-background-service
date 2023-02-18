@@ -1,42 +1,24 @@
-using System.Collections.ObjectModel;
 using System.Globalization;
-using TimeZoneConverter;
+using e08.domain.model;
+using e08.domain.unitofwork;
 
 namespace e08.application.impl;
 
 public class TimeProvider : ITimeProvider
 {
+    private IEnumerable<CityTime>? cityTimes;
 
-    ReadOnlyCollection<string> cityXtimeZones =
-       new ReadOnlyCollection<string>(new List<string>
-       {
-            "Bogota;America/Bogota",
-            "Chicago;America/Chicago",
-            "Argentina;America/Argentina/Buenos_Aires",
-            "Detroit;America/Detroit",
-            "London;Europe/London"
-       });
-
-    private Dictionary<string, TimeZoneInfo> _timeZones = new Dictionary<string, TimeZoneInfo>();
-
-    public TimeProvider()
+    public TimeProvider(IUnitOfWork unitOfWork)
     {
-        foreach (string timeZone in cityXtimeZones)
-        {
-            string[] parts = timeZone.Split(';');
-            string city = parts[0];
-            string ianaTimeZone = parts[1];
-            TimeZoneInfo zone = TimeZoneInfo.FindSystemTimeZoneById(TZConvert.IanaToWindows(ianaTimeZone));
-            _timeZones.Add(city, zone);
-        }
+        cityTimes = unitOfWork.CityTimeRepository.GetAll().Result;
     }
 
     public void PrintTime()
     {
-        foreach (KeyValuePair<string, TimeZoneInfo> timeZone in _timeZones)
+        foreach (CityTime cityTime in cityTimes ?? Enumerable.Empty<CityTime>())
         {
-            Console.WriteLine($"City: {timeZone.Key}");
-            System.Console.WriteLine($"Timezone: {TZConvert.WindowsToIana(timeZone.Value.Id)}");
+            Console.WriteLine($"City: {cityTime.City}");
+            System.Console.WriteLine($"Timezone: {cityTime.TimeZone}");
             System.Console.WriteLine($"Time: {DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.FFFzzz", CultureInfo.InvariantCulture)}\n");
         }
     }
